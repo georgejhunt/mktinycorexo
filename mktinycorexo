@@ -1133,7 +1133,7 @@ visible
 .(    by quozl@laptop.org, ${VERSION}               -- ) cr cr
 
 \ for the ACPower monitor, add the CP continuous power tag
-" CP" find-tag if else " CP" \$add-tag then
+" CP" find-tag if else " CP" \\\$add-tag then
 
 \ translate a bundle suffix string to an architecture tag string
 : b>a  ( bundle$ -- architecture$ )

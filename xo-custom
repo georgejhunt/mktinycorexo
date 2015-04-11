@@ -193,6 +193,20 @@ asolpc() {
     fi
 }
 
+interact(){
+  MYPROMPT='$ '
+  while true; do
+      echo -n "$MY_PROMPT"
+      read line
+      if [ $line == 'exit' ]; then
+        break
+      fi
+      eval "$line"
+  done
+
+  exit 0
+}
+
 echo "in chroot" 
 
 if [ -d /media/bundles ]
@@ -212,6 +226,7 @@ check_yum
 asroot
 # run as olpc now
 asolpc
+interact
 EOF
 
 chmod 777 /mnt/tmp/tmp/in_chroot.sh

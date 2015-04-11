@@ -6,13 +6,18 @@ mount /mnt/sda1
 mkdir -p /mnt/xo
 mke2fs -q -O dir_index,^resize_inode -L Boot -F /dev/mmcblk0p1
 mkfs.ext3 -q -O dir_index,^huge_file -E resize=8G -m1 -L OLPCRoot /dev/mmcblk0p2
+mkfs.ext4 -q -O dir_index,^huge_file -E resize=128G -m1 -L library /dev/mmcblk1p1
 tune2fs -o journal_data_ordered /dev/mmcblk0p2 >/dev/null
 mount /dev/mmcblk0p2 /mnt/xo
 mkdir -p /mnt/xo/boot
 mount /dev/mmcblk0p1 /mnt/xo/boot
+mkdir -p /mnt/xo/library
+mount /dev/mmcblk1p1 /mnt/xo/library
 tar --extract --directory /mnt/xo --file /mnt/sda1/xo.tar .
 umount /mnt/xo/boot
 rmdir /mnt/xo/boot
+umount /mnt/xo/library
+rmdir /mnt/xo/library
 umount /mnt/xo
 rmdir /mnt/xo
 umount /mnt/sda1

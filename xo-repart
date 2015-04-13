@@ -3,8 +3,26 @@
 # derived from olpc-os-builder/modules/sd_card_image/image.50.makefs.sh
 # WARNING: destroys data on target media
 set -e
-dd if=/dev/zero of=/dev/mmcblk0 bs=1024 count=16 >/dev/null 2>&1
-sfdisk -q -S 32 -H 32 --force -uS /dev/mmcblk0 <<EOF >/dev/null 2>&1
+mount /mnt/sda1
+mkdir -p /mnt/xo
+mount /dev/mmcblk0p2 /mnt/xo
+
+# is this the motherboard partition
+if [ -d /mnt/xo/usr/bin ]; then
+  motherboard=/dev/mmcblk0
+  sdcard=/dev/mmcblk1
+else
+  motherboard=/dev/mmcblk1
+  sdcard=/dev/mmcblk0
+fi
+umount /mnt/xo
+
+dd if=/dev/zero of=${motherbord} bs=1024 count=16 >/dev/null 2>&1
+sfdisk -q -S 32 -H 32 --force -uS ${motherboard} <<EOF >/dev/null 2>&1
+8192,131072,83,*
+139264,,,
+dd if=/dev/zero of=${sdcard} bs=1024 count=16 >/dev/null 2>&1
+sfdisk -q -S 32 -H 32 --force -uS ${sdcard} <<EOF >/dev/null 2>&1
 8192,131072,83,*
 139264,,,
 EOF

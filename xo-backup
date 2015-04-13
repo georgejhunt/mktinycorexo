@@ -6,14 +6,14 @@ mkdir -p /mnt/xo
 mount /dev/mmcblk0p2 /mnt/xo
 
 # is this the motherboard partition
-if [ -d /mnt/xo/usr/bin ]; then
-  motherboard=mmcblk0
-  sdcard=mmcblk1
+if [ -d /mnt/xo/security ]; then
+  motherboard=/dev/mmcblk0
+  sdcard=/dev/mmcblk1
 else
-  motherboard=mmcblk1
-  sdcard=mmcblk0
+  motherboard=/dev/mmcblk1
+  sdcard=/dev/mmcblk0
 fi
-umount /mnt/xo/mmcblk0p2
+umount /mnt/xo
 
 mount ${motherboard}p2 /mnt/xo
 mkdir -p /mnt/xo/boot
